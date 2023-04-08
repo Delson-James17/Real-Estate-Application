@@ -12,7 +12,7 @@ using Real_Estate.Data;
 namespace Real_Estate.Migrations
 {
     [DbContext(typeof(RealEstateDbContext))]
-    [Migration("20230408132420_init")]
+    [Migration("20230408133142_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
