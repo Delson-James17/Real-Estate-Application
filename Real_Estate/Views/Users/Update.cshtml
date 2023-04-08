@@ -1,10 +1,13 @@
-﻿@using Real_Estate.ViewModels;
+﻿@using Microsoft.AspNetCore.Identity;
+@using Real_Estate.ViewModels;
 @model EditUserViewModel
 @*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
 }
+@inject SignInManager<ApplicationUser> _signInManager
+
 <h1>Edit User</h1>
 
 <form class="forms" asp-controller="Users" asp-action="Update" method="post">
@@ -40,6 +43,14 @@
         <input asp-for="UrlImages" />
         <span asp-validation-for="UrlImages"></span>
     </div>
+    @if (_signInManager.IsSignedIn(User) && User.IsInRole("Admin") || User.IsInRole("Owner"))
+    {
+        <div>
+        <label asp-for="ZoomLink"></label>
+        <input asp-for="ZoomLink" />
+        <span asp-validation-for="ZoomLink"></span>
+        </div>
+    }
     <div>
         <label asp-for="UserName"></label>
         <input asp-for="UserName" />

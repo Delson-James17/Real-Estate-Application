@@ -46,7 +46,8 @@ namespace Real_Estate.Controllers
                 DOB = (DateTime)users.DOB,
                 PhoneNumber = users.PhoneNumber,
                 UrlImages = users.UrlImages,
-                UserName= users.UserName,
+                ZoomLink = users.ZoomLink,
+                UserName = users.UserName,
                 Email = users.Email,
                 Roles = roles
 
