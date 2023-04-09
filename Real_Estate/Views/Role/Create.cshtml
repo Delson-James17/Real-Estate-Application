@@ -6,13 +6,28 @@
 @{
 }
 
-<form class="forms" method="post" asp-action="Create" asp-controller="Role">
-    <h2>Create Roles</h2>
-    <div asp-validation-summary="All" class="text-danger"></div>
-    <div class="form-group">
-        <label for="exampleInputEmail1">Roles</label>
-        <input asp-for="Name" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Role">
-        <span asp-validation-for="Id" class="text-danger"></span>
-    </div>
-    <button type="submit">Create</button>
-</form>
+<head>
+    <!-- Design by foolishdeveloper.com -->
+    <title>Glassmorphism login Form Tutorial in html css</title>
+
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
+    @*    <link href="~/css/site.css" rel="stylesheet" />*@
+    <!--Stylesheet-->
+
+</head>
+<body class="login-register-Body">
+    <form method="post" asp-action="Create" asp-controller="Role" class=".forms">
+        <h3 class="whiteText">Create Role</h3>
+
+        <label for="exampleInputEmail" class="whiteText">Role</label>
+        <input asp-for="Name" class="form-control form-control-lg" placeholder="Enter Role" />
+        <span asp-validation-for="Id" class="whiteText"></span>
+
+        <div class="buttonDiv">
+            <button type="submit">Create</button>
+        </div>
+
+    </form>
+</body>
