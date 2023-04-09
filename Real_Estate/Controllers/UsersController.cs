@@ -1,18 +1,22 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Real_Estate.Data;
 using Real_Estate.Models;
 using Real_Estate.ViewModels;
+using System.Security.Claims;
 
 namespace Real_Estate.Controllers
 {
     public class UsersController : Controller
     {
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly RealEstateDbContext _context;
 
-        public UsersController(UserManager<ApplicationUser> userManager)
+        public UsersController(UserManager<ApplicationUser> userManager, RealEstateDbContext context)
         {
             _userManager = userManager;
+            _context = context;
         }
 
         public async Task<IActionResult> GetAllUsers()
@@ -46,6 +50,7 @@ namespace Real_Estate.Controllers
                 DOB = (DateTime)users.DOB,
                 PhoneNumber = users.PhoneNumber,
                 UrlImages = users.UrlImages,
+                Zoomlink = users.Zoomlink,
                 UserName = users.UserName,
                 Email = users.Email,
                 Roles = roles
@@ -53,11 +58,24 @@ namespace Real_Estate.Controllers
             };
             return View(userViewModel);
         }
+        
         [HttpPost]
-        public IActionResult Update(EditUserViewModel user)
+        public async Task<IActionResult> Update(EditUserViewModel user)
         {
-            //var user = _userManager.Users.FirstOrDefault(u => u.Id == newUser);
+            string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
+            ApplicationUser? userProfile = await _context.Userprofiles.FindAsync(userId);
+
+            userProfile.Name = user.Name;
+            userProfile.Age = user.Age;
+            userProfile.Address = user.Address;
+            userProfile.Email = user.Email;
+            userProfile.DOB = user.DOB;
+            userProfile.Zoomlink = user.Zoomlink;
+            userProfile.UserName = user.UserName;
+            userProfile.PhoneNumber = user.PhoneNumber;
+
+            int value = await _context.SaveChangesAsync();
             return RedirectToAction("GetAllUsers");
         }
        

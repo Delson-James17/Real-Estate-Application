@@ -49,7 +49,6 @@ namespace Real_Estate.Migrations
                     Age = table.Column<int>(type: "int", nullable: false),
                     DOB = table.Column<DateTime>(type: "datetime2", nullable: true),
                     UrlImages = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ZoomLink = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -68,40 +67,6 @@ namespace Real_Estate.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Clients",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ContactNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Address = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    URLimage = table.Column<string>(type: "nvarchar(max)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Clients", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Owners",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ContactNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Address = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    URLimage = table.Column<string>(type: "nvarchar(max)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Owners", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -236,17 +201,11 @@ namespace Real_Estate.Migrations
                     UrlImages = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     PriceifSale = table.Column<double>(type: "float", nullable: false),
                     PriceifRent = table.Column<double>(type: "float", nullable: false),
-                    PropertytypesID = table.Column<int>(type: "int", nullable: true),
-                    ownerID = table.Column<int>(type: "int", nullable: true)
+                    PropertytypesID = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Properties", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Properties_Owners_ownerID",
-                        column: x => x.ownerID,
-                        principalTable: "Owners",
-                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Properties_PropertyTypes_PropertytypesID",
                         column: x => x.PropertytypesID,
@@ -294,11 +253,6 @@ namespace Real_Estate.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Properties_ownerID",
-                table: "Properties",
-                column: "ownerID");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Properties_PropertytypesID",
                 table: "Properties",
                 column: "PropertytypesID");
@@ -325,9 +279,6 @@ namespace Real_Estate.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "Clients");
-
-            migrationBuilder.DropTable(
                 name: "Properties");
 
             migrationBuilder.DropTable(
@@ -335,9 +286,6 @@ namespace Real_Estate.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
-
-            migrationBuilder.DropTable(
-                name: "Owners");
 
             migrationBuilder.DropTable(
                 name: "PropertyTypes");

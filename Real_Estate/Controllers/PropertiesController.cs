@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ActionConstraints;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Real_Estate.Data;
@@ -22,6 +24,7 @@ namespace Real_Estate.Controllers
             _context = context;
         }
 
+
         // GET: Properties
         [Authorize(Roles = "Admin, Owner")]
         public async Task<IActionResult> Index(string SearchString)
@@ -36,6 +39,13 @@ namespace Real_Estate.Controllers
                 property = property.Where(b => b.Name.Contains(SearchString) || b.Address.Contains(SearchString));
             }
             return View(await property.AsNoTracking().ToListAsync());
+        }
+
+        public async Task<IActionResult> ZoomLink(string id)
+        {
+            ApplicationUser? user = await _context.Userprofiles.FindAsync(id);
+            ViewBag.User = user;
+            return View();
         }
        
         public async Task<IActionResult> Properties(string SearchString)
@@ -63,15 +73,14 @@ namespace Real_Estate.Controllers
             }
 
             var @property = await _context.Properties
+                .Include(a => a.ApplicationUser)
                 .Include(p => p.Propertytypes)
-                .Include(p => p.owner)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (@property == null)
             {
                 return NotFound();
             }
             ViewData["PropertytypesID"] = new SelectList(_context.PropertyTypes, "Id", "Name", "Price");
-            ViewData["ownerID"] = new SelectList(_context.Owners, "Id", "Name", "Price");
 
             return View(@property);
         }
@@ -80,7 +89,6 @@ namespace Real_Estate.Controllers
         public IActionResult Create()
         {
             ViewData["PropertytypesID"] = new SelectList(_context.PropertyTypes, "Id", "Name","Price");
-            ViewData["ownerID"] = new SelectList(_context.Owners, "Id", "Name","Price");
             return View();
         }
         [Authorize(Roles = "Admin, Owner")]
@@ -89,17 +97,22 @@ namespace Real_Estate.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Description,Address,UrlImages,PriceifSale,PriceifRent,PropertytypesID,ownerID, MapLink")] Property @property)
+        public async Task<IActionResult> Create([Bind("Id,Name,Description,Address,UrlImages,PriceifSale,PriceifRent,PropertytypesID,ownerID, MapLink")] Property property)
         {
+            string Id = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            ApplicationUser? user = await _context.Userprofiles.FindAsync(Id);
+            if(user != null)
+            {
+                property.ApplicationUser = user;
+            }
             if (ModelState.IsValid)
             {
-                _context.Add(@property);
-                await _context.SaveChangesAsync();
+                _context.Add(property);
+                int value = await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["PropertytypesID"] = new SelectList(_context.PropertyTypes, "Price", "Name", @property.PropertytypesID);
-            ViewData["ownerID"] = new SelectList(_context.Owners, "Id", "Id", @property.ownerID);
-            return View(@property);
+            ViewData["PropertytypesID"] = new SelectList(_context.PropertyTypes, "Price", "Name", property.PropertytypesID);
+            return View(property);
         }
         [Authorize(Roles = "Admin, Owner")]
         // GET: Properties/Edit/5
@@ -116,7 +129,6 @@ namespace Real_Estate.Controllers
                 return NotFound();
             }
             ViewData["PropertytypesID"] = new SelectList(_context.PropertyTypes, "Id", "Id", @property.PropertytypesID);
-            ViewData["ownerID"] = new SelectList(_context.Owners, "Id", "Id", @property.ownerID);
             return View(@property);
         }
 
@@ -153,7 +165,6 @@ namespace Real_Estate.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["PropertytypesID"] = new SelectList(_context.PropertyTypes, "Id", "Id", @property.PropertytypesID);
-            ViewData["ownerID"] = new SelectList(_context.Owners, "Id", "Id", @property.ownerID);
             return View(@property);
         }
         [Authorize(Roles = "Admin, Owner")]
@@ -167,7 +178,6 @@ namespace Real_Estate.Controllers
 
             var @property = await _context.Properties
                 .Include(p => p.Propertytypes)
-                .Include(p => p.owner)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (@property == null)
             {

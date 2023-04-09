@@ -67,7 +67,6 @@
                                     <th data-priority="3">@Html.DisplayNameFor(model => model.UrlImages)</th>
                                     <th data-priority="4">@Html.DisplayNameFor(model => model.PriceifSale)</th>
                                     <th data-priority="5">@Html.DisplayNameFor(model => model.PriceifRent)</th>
-                                    <th data-priority="6">@Html.DisplayNameFor(model => model.owner)</th>
                                     <th data-priority="6">Actions</th>
                                 </tr>
                             </thead>
@@ -94,9 +93,7 @@
                                         <td>
                                             @Html.DisplayFor(modelItem => item.PriceifRent)
                                         </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.owner.Name)
-                                        </td>
+                                    
                                         <td>
                                             <button><a asp-action="Edit" asp-route-id="@item.Id" class="whiteText">Edit</a></button>
                                             <button><a asp-action="Details" asp-route-id="@item.Id" class="whiteText">Details</a></button>

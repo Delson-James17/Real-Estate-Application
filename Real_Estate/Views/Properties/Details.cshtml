@@ -159,7 +159,6 @@ mark {
                 <div class="about-text go-to">
                     <h3 class="dark-color">@Html.DisplayFor(model => model.Name)</h3>
                     <h6 class="theme-color lead">Address: @Html.DisplayFor(model => model.Address)</h6>
-                    <p>Owner: @Html.DisplayFor(model => model.owner.Name)</p>
                     <p> @Html.DisplayFor(model => model.Description)</p>
                     <div class="row about-list">
                         <div class="col-md-6">
@@ -186,6 +185,13 @@ mark {
                             <div class="media">
                                 <div class="detailsbuttonDiv">
                                     <button class="detailsButton"> <a class="details-button-text" asp-action="Properties" style="text-decoration: none;">Back to List</a></button>
+                                </div>
+                            </div>
+                            </div>
+                             <div class="col-md-6">
+                            <div class="media">
+                                <div class="detailsbuttonDiv">
+                                    <button class="detailsButton"> <a class="details-button-text" asp-action="ZoomLink" asp-route-id="@Model.ApplicationUser.Id" style="text-decoration: none;">ZoomLink</a></button>
                                 </div>
                             </div>
                             </div>

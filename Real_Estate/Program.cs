@@ -4,11 +4,12 @@ using Microsoft.EntityFrameworkCore;
 using Real_Estate.Models;
 
 var builder = WebApplication.CreateBuilder(args);
-var connectionString = builder.Configuration.GetConnectionString("Real_EstateDbContextConnection") ?? throw new InvalidOperationException("Connection string 'Real_EstateDbContextConnection' not found.");
 
 // Add services to the container.
 
-builder.Services.AddDbContext<RealEstateDbContext>();
+builder.Services.AddDbContext<RealEstateDbContext>(options => {
+    options.UseSqlServer(builder.Configuration.GetConnectionString("Real_EstateDbContextConnection"));
+});
 builder.Services.AddControllersWithViews();
 builder.Services.AddIdentity<ApplicationUser , IdentityRole>()
     .AddEntityFrameworkStores<RealEstateDbContext>();
@@ -32,7 +33,7 @@ app.MapControllerRoute(
     pattern: "{controller=Properties}/{action=Properties}/{id?}");
 
 
-REDbInitializer.Seed(app);
+//REDbInitializer.Seed(app);
 app.Run();
 
 
