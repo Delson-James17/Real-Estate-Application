@@ -12,7 +12,6 @@ namespace Real_Estate.ViewModels
         public DateTime DOB { get; set; }
         public string UserName { get; set; }
         public string UrlImages { get; set; }
-        public string ZoomLink { get; set; }
 
         [Required]
         [EmailAddress]

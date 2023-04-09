@@ -43,14 +43,14 @@
         <input asp-for="UrlImages" />
         <span asp-validation-for="UrlImages"></span>
     </div>
-    @if (_signInManager.IsSignedIn(User) && User.IsInRole("Admin") || User.IsInRole("Owner"))
+    @*@if (_signInManager.IsSignedIn(User) && User.IsInRole("Admin") || User.IsInRole("Owner"))
     {
-        <div>
-        <label asp-for="ZoomLink"></label>
-        <input asp-for="ZoomLink" />
-        <span asp-validation-for="ZoomLink"></span>
-        </div>
-    }
+    <div>
+    <label asp-for="ZoomLink"></label>
+    <input asp-for="ZoomLink" />
+    <span asp-validation-for="ZoomLink"></span>
+    </div>
+    }*@
     <div>
         <label asp-for="UserName"></label>
         <input asp-for="UserName" />
