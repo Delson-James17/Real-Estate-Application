@@ -1,4 +1,4 @@
-﻿@using Microsoft.AspNetCore.Identity;
+@using Microsoft.AspNetCore.Identity;
 @model List<IdentityRole>
 @*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -49,7 +49,7 @@
     <h1 class="whiteText" style="text-align:center;">Roles</h1>
 
     <p>
-        <button> <a class="whiteText" asp-controller="Role" asp-action="Create">Create New Role</a></button>
+        <button> <a class="blackText" asp-controller="Role" asp-action="Create">Create New Role</a></button>
 
     </p>
 
@@ -77,9 +77,9 @@
                                             @Html.DisplayFor(modelItem => role.Name)
                                         </td>
                                         <td>
-                                            <button><a asp-controller="Role" asp-action="Edit" asp-route-id="@role.Id" class="whiteText">Edit</a></button>
-                                            <button><a asp-controller="Role" asp-action="Details" asp-route-id="@role.Id" class="whiteText">Details</a></button>
-                                            <button><a asp-controller="Role" asp-action="Delete" asp-route-id="@role.Id" class="whiteText">Delete</a></button>
+                                            <button><a asp-controller="Role" asp-action="Edit" asp-route-id="@role.Id" class="blackText">Edit</a></button>
+                                            <button><a asp-controller="Role" asp-action="Details" asp-route-id="@role.Id" class="blackText">Details</a></button>
+                                            <button><a asp-controller="Role" asp-action="Delete" asp-route-id="@role.Id" class="blackText">Delete</a></button>
                                         </td>
                                     </tr>
                                 }
