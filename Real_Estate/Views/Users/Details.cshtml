@@ -1,4 +1,4 @@
-﻿@model ApplicationUser
+@model ApplicationUser
 
 @*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -18,9 +18,8 @@
 </head>
 
 <body class="login-register-Body">
-    <div class="row">
-        <div class="col-md-4">
-            <form asp-action="Edit">
+
+            <form class="forms" asp-action="Edit">
                 <h3 class="whiteText">Details of User</h3>
 
                 <label for="username" class="whiteText">Full Name:</label>
@@ -48,9 +47,7 @@
                 <h2 class="whiteText">@Model.UserName</h2>
 
                 <div class="buttonDiv">
-                    <button asp-controller="Users" asp-action="GetAllUsers" class="whiteText">Back to List</button>
+                    <button asp-controller="Users" asp-action="GetAllUsers" class="blackText">Back to List</button>
                 </div>
             </form>
-        </div>
-    </div>
 </body>
