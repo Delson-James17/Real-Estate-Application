@@ -17,17 +17,17 @@
         <nav>
             <ul>
                 <div class="logo">
-                    <img class="propertyImage" src="~/lib/img/logo.png">
+                    <img src="~/lib/img/pjli-real-estate-low-resolution-logo-color-on-transparent-background.png">
                 </div>
                 <hr>
-                <li><a asp-area="" asp-controller="Properties" asp-action="Properties">Home</a></li>
+                <li><a class="nav-link text-dark" asp-area="" asp-controller="Properties" asp-action="Properties">Home</a></li>
                 @if (_signInManager.IsSignedIn(User) && User.IsInRole("Admin") || User.IsInRole("Owner"))
                 {
                     <li>
-                        <a asp-area="" asp-controller="" asp-action="">Property Creation </a>
+                        <a class="nav-link text-dark" asp-area="" asp-controller="" asp-action="">Property Creation </a>
                         <ul>
-                            <li> <a asp-area="" asp-controller="Properties" asp-action="Create">Create Property</a></li>
-                            <li> <a asp-area="" asp-controller="Properties" asp-action="Index">All Property</a></li>
+                            <li> <a class="nav-link text-dark" asp-area="" asp-controller="Properties" asp-action="Create">Create Property</a></li>
+                            <li> <a class="nav-link text-dark" asp-area="" asp-controller="Properties" asp-action="Index">All Property</a></li>
 
                         </ul>
                     </li>
@@ -35,25 +35,25 @@
                 @if (_signInManager.IsSignedIn(User) && User.IsInRole("Admin"))
                 {
                     <li>
-                        <a asp-area="" asp-controller="PropertyTypes" asp-action="Index">Property Types</a>
+                        <a class="nav-link text-dark" asp-area="" asp-controller="PropertyTypes" asp-action="Index">Property Types</a>
                     </li>
                     <li>
-                        <a asp-area="" asp-controller="Users" asp-action="GetAllUsers">Users </a>
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Users" asp-action="GetAllUsers">Users </a>
                     </li>
 
                     <li>
-                        <a asp-area="" asp-controller="" asp-action="">Appointment </a>
+                        <a class="nav-link text-dark" asp-area="" asp-controller="" asp-action="">Appointment </a>
                         <ul>
-                            <li> <a asp-area="" asp-controller="Appointments" asp-action="Create">Create Appointment</a></li>
-                            <li> <a asp-area="" asp-controller="Appointments" asp-action="Index">All Apointment</a></li>
+                            <li> <a class="nav-link text-dark" asp-area="" asp-controller="Appointments" asp-action="Create">Create Appointment</a></li>
+                            <li> <a class="nav-link text-dark" asp-area="" asp-controller="Appointments" asp-action="Index">All Apointment</a></li>
 
                         </ul>
                     </li>
                     <li>
-                        <a asp-area="" asp-controller="" asp-action="">Roles      </a>
+                        <a class="nav-link text-dark" asp-area="" asp-controller="" asp-action="">Roles      </a>
                         <ul>
-                            <li> <a asp-controller="Role" asp-action="Create">Create Role</a></li>
-                            <li> <a asp-controller="Role" asp-action="GetAllRoles">All Roles </a></li>
+                            <li> <a class="nav-link text-dark" asp-controller="Role" asp-action="Create">Create Role</a></li>
+                            <li> <a class="nav-link text-dark" asp-controller="Role" asp-action="GetAllRoles">All Roles </a></li>
                         </ul>
                     </li>
 
