@@ -1,10 +1,65 @@
-﻿@model Real_Estate.Models.Property
+@model Real_Estate.Models.Property
 
 @{
     ViewData["Title"] = "Delete";
 }
+<head>
+    <!-- Design by foolishdeveloper.com -->
+    <title>Glassmorphism login Form Tutorial in html css</title>
 
-<h1>Delete</h1>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link rel="stylesheet" href="C:\Users\COLLABERA\Desktop\Capstone01\Real_Estate\wwwroot\css\site.css">
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
+
+</head>
+
+
+
+<body class="propertyBody">
+    <h1 class="whiteText" style="text-align:center;">Delete</h1>
+    <h2 class="whiteText" style="text-align:center;">Are you sure you want to delete this?</h2>
+    <form asp-action="Delete">
+    <section class="section about-section gray-bg" id="about">
+        <div class="container">
+            <div class="row align-items-center flex-row">
+                <div class="col-lg-6">
+                    <div class="about-avatar">
+                        <img src="@Html.DisplayFor(model => model.UrlImages)" title="" alt="">
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="about-text go-to">
+                        <p class="dark-color">Name: @Html.DisplayFor(model => model.Name)</p>
+                        <p class="theme-color lead">Description: @Html.DisplayFor(model => model.Description)</p>
+                        <p class="theme-color lead">Address: @Html.DisplayFor(model => model.Address)</p>
+                        <p class="theme-color lead">Sale Price: @Html.DisplayFor(model => model.PriceifSale)</p>
+                        <p class="theme-color lead">Rent Price: @Html.DisplayFor(model => model.PriceifRent)</p>
+                        <div class="row about-list">
+                            <div class="col-md-6">
+                                <div class="media">
+                                    <div>
+                                                <input type="hidden" asp-for="Id" />
+                                                <input type="submit" value="Delete" class="btn btn-danger" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+    </form>
+
+</body>
+
+
+
+
+
+@*<h1>Delete</h1>
 
 <h3>Are you sure you want to delete this?</h3>
 <div>
@@ -56,3 +111,4 @@
         <a asp-action="Index">Back to List</a>
     </form>
 </div>
+*@
