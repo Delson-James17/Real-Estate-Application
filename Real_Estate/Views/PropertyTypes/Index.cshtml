@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Real_Estate.Models.PropertyTypes>
+@model IEnumerable<Real_Estate.Models.PropertyTypes>
 
 @{
     ViewData["Title"] = "Index";
@@ -46,7 +46,7 @@
     <h1 class="whiteText" style="text-align:center;">Property Types</h1>
 
     <p>
-        <button> <a class="whiteText" asp-action="Create">Create New</a></button>
+        <button> <a class="blackText" asp-action="Create">Create New</a></button>
 
     </p>
 
@@ -60,6 +60,7 @@
                                 <tr>
                                     <th> @Html.DisplayNameFor(model => model.Name)</th>
                                     <th data-priority="1">@Html.DisplayNameFor(model => model.Description)s</th>
+                                    <th data-priority="1">Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -73,9 +74,9 @@
                                             @Html.DisplayFor(modelItem => item.Description)
                                         </td>
                                         <td>
-                                            <button><a asp-action="Edit" asp-route-id="@item.Id" class="whiteText">Edit</a></button>
-                                            <button><a asp-action="Details" asp-route-id="@item.Id" class="whiteText">Details</a></button>
-                                            <button><a asp-action="Delete" asp-route-id="@item.Id" class="whiteText">Delete</a></button>
+                                            <button><a asp-action="Edit" asp-route-id="@item.Id" class="blackText">Edit</a></button>
+                                            <button><a asp-action="Details" asp-route-id="@item.Id" class="blackText">Details</a></button>
+                                            <button><a asp-action="Delete" asp-route-id="@item.Id" class="blackText">Delete</a></button>
                                         </td>
                                     </tr>
                                 }
