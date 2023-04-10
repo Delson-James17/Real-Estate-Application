@@ -1,4 +1,4 @@
-﻿@using Microsoft.AspNetCore.Identity;
+@using Microsoft.AspNetCore.Identity;
 @using Real_Estate.ViewModels;
 @model EditUserViewModel
 @*
@@ -8,8 +8,83 @@
 }
 @inject SignInManager<ApplicationUser> _signInManager
 
-<h1>Edit User</h1>
+    <head>
+    <!-- Design by foolishdeveloper.com -->
+    <title>Glassmorphism login Form Tutorial in html css</title>
 
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link rel="stylesheet" href="C:\Users\COLLABERA\Desktop\Capstone01\Real_Estate\wwwroot\css\site.css">
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
+
+</head>
+
+<body class="propertyBody">
+    <div class="row">
+        <div class="col-md-4">
+            <form class="forms" asp-controller="Users" asp-action="Update" method="post">
+                <h1 class="whiteText" style="text-align:center;">Edit User</h1>
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="Id" />
+                <div class="form-group">
+                    <label asp-for="Name" class="whiteText">Name</label>
+                    <input asp-for="Name" class="form-control" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+                                <div class="form-group">
+                    <label asp-for="Age" class="whiteText">Age</label>
+                    <input asp-for="Age" class="form-control" />
+                    <span asp-validation-for="Age" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="DOB" class="whiteText">Date of Birth</label>
+                    <input asp-for="DOB" class="form-control" />
+                    <span asp-validation-for="DOB" class="text-danger"></span>
+                </div>
+                                <div class="form-group">
+                    <label asp-for="Address" class="whiteText">Address</label>
+                    <input asp-for="Address" class="form-control" />
+                    <span asp-validation-for="Address" class="text-danger"></span>
+                </div>
+                                <div class="form-group">
+                    <label asp-for="PhoneNumber" class="whiteText">Phone Number</label>
+                    <input asp-for="PhoneNumber" class="form-control" />
+                    <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                </div>
+                                <div class="form-group">
+                    <label asp-for="UrlImages" class="whiteText">URL Image</label>
+                    <input asp-for="UrlImages" class="form-control" />
+                    <span asp-validation-for="UrlImages" class="text-danger"></span>
+                </div>
+                                <div class="form-group">
+                    <label asp-for="Zoomlink" class="whiteText">Zoom Link</label>
+                    <input asp-for="Zoomlink" class="form-control" />
+                    <span asp-validation-for="Zoomlink" class="text-danger"></span>
+                </div>
+                                <div class="form-group">
+                    <label asp-for="UserName" class="whiteText">User Name</label>
+                    <input asp-for="UserName" class="form-control" />
+                    <span asp-validation-for="UserName" class="text-danger"></span>
+                </div>
+                                <div class="form-group">
+                    <label asp-for="Email" class="whiteText">Email</label>
+                    <input asp-for="Email" class="form-control" />
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+                <div class="buttonDiv">
+                    <button input type="submit" value="Save" class="blackText">Save</button>
+                    <div>
+                        <a asp-action="Index" class="whiteText">Back to List</a>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</body>
+
+@*<h1>Edit User</h1>
+<body class="propertyBody">
 <form class="forms" asp-controller="Users" asp-action="Update" method="post">
     <div asp-validation-summary="All" class="text-danger">
     </div>
@@ -48,6 +123,7 @@
         <input asp-for="Zoomlink" />
         <span asp-validation-for="Zoomlink"></span>
     </div>
+    @**@
     @*@if (_signInManager.IsSignedIn(User) && User.IsInRole("Admin") || User.IsInRole("Owner"))
     {
     <div>
@@ -56,6 +132,7 @@
     <span asp-validation-for="ZoomLink"></span>
     </div>
     }*@
+    @*
     <div>
         <label asp-for="UserName"></label>
         <input asp-for="UserName" />
@@ -96,3 +173,4 @@
 
     <button type="submit">Edit</button>
 </form>
+</body>*@
