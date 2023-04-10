@@ -1,4 +1,4 @@
-﻿
+
 @model List<ApplicationUser>
 @*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -82,9 +82,9 @@
 
 
                                         <td>
-                                            <button><a asp-controller="Users" asp-action="Details" asp-route-userId="@users.Id" class="whiteText">Details</a></button>
-                                            <button><a asp-controller="Users" asp-action="Update" asp-route-userId="@users.Id" class="whiteText">Update</a></button>
-                                            <button><a asp-controller="Users" asp-action="Delete" asp-route-userId="@users.Id" class="whiteText">Delete</a></button>
+                                            <button><a asp-controller="Users" asp-action="Update" asp-route-userId="@users.Id" class="blackText">Edit</a></button>
+                                            <button><a asp-controller="Users" asp-action="Details" asp-route-userId="@users.Id" class="blackText">Details</a></button>
+                                            <button><a asp-controller="Users" asp-action="Delete" asp-route-userId="@users.Id" class="blackText">Delete</a></button>
                                         </td>
                                     </tr>
                                 }
