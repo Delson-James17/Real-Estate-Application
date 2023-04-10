@@ -1,15 +1,25 @@
-﻿@*
+@*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
     ApplicationUser user = ViewBag.User;
 }
+<head>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="C:\Users\COLLABERA\Desktop\Capstone01\Real_Estate\wwwroot\css\site.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
+</head>
+
+<body class="propertyBody">
+ 
 <div class="col-lg-4">
+    <form class="forms">
     <div class="card mb-4">
-        <div class="card-body text-center">
+            <div class="card-body text-center" style="margin: auto;">
             <img src="@user.UrlImages" alt="avatar"
                  class="rounded-circle img-fluid" style="width: 150px;">
-            <h5 class="my-3">@user.Name</h5>
+            <h5 class="my-3" style="color: black;">@user.Name</h5>
             <p class="text-muted mb-1">@user.Address</p>
             <p class="text-muted mb-4">@user.PhoneNumber</p>
             <div class="d-flex justify-content-center mb-2">
@@ -17,3 +27,6 @@
             </div>
         </div>
     </div>
+    </form>
+</div>
+</body>
