@@ -13,13 +13,12 @@ namespace Real_Estate.Models
         public string UrlImages { get; set; }
         public Double PriceifSale { get; set; }
         public Double PriceifRent { get; set; }
+        public List<Appointment>? Appointments { get; set; }
         //relationships 
         [ForeignKey("PropertytypesId")]
         public int? PropertytypesID { get; set; }
         public PropertyTypes? Propertytypes { get; set; }
-        
 
-        
         public ApplicationUser? ApplicationUser { get; set; }    
     }
 }

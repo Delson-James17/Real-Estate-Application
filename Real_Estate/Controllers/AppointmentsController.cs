@@ -27,11 +27,19 @@ namespace Real_Estate.Controllers
             return View();
         }
         // GET: Appointments
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string SearchString)
         {
-              return _context.Appointment != null ? 
-                          View(await _context.Appointment.ToListAsync()) :
-                          Problem("Entity set 'RealEstateDbContext.Appointment'  is null.");
+            /*return _context.Appointment != null ? 
+                        View(await _context.Appointment.ToListAsync()) :
+                        Problem("Entity set 'RealEstateDbContext.Appointment'  is null.");*/
+            ViewData["CurrentFilter"] = SearchString;
+            var appointment = from b in _context.Appointment
+                              select b;
+            if (!String.IsNullOrEmpty(SearchString))
+            {
+                appointment = appointment.Where(b => b.Name.Contains(SearchString) || b.Email.Contains(SearchString));
+            }
+            return View(await appointment.AsNoTracking().ToListAsync());
         }
 
         // GET: Appointments/Details/5

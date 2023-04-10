@@ -2,11 +2,70 @@
 using Microsoft.AspNetCore.Routing.Constraints;
 using Microsoft.EntityFrameworkCore;
 using Real_Estate.Models;
+using System.Xml.Linq;
 
 namespace Real_Estate.Data
 {
-    public class REDbInitializer
+    public static class REDbInitializer 
     {
+      public static void RolesSeed(this ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<IdentityRole>().HasData(
+           new IdentityRole{
+                Id = "fb63abec-98f5-448e-8f56-302fafd16df4",
+                Name = "Admin",
+                NormalizedName = "ADMIN",
+            },
+            new IdentityRole
+            {
+                Id = "5c965850-234a-4d90-9c24-024ebfac6f20",
+                Name = "Client",
+                NormalizedName = "CLIENT",
+            },
+             new IdentityRole
+             {
+                Id = "51d0771e-de96-4882-a01e-8f0b9949e90c",
+                Name = "Owner",
+                NormalizedName = "OWNER",
+            }
+            );
+        }
+       public static void UserSeed(this ModelBuilder modelBuilder)
+        {
+            string defaultPassword = "P@ssword123";
+
+            var passwordHasher = new PasswordHasher<ApplicationUser>();
+            modelBuilder.Entity<ApplicationUser>().HasData(
+          new ApplicationUser
+          {
+              Id = "f0fbf9f0-eb17-4c87-9c76-9de5451f74ae",
+              Name = "Admin",
+              Age = 23,
+              Address = "Laguna",
+              DOB = DateTime.Now,
+              UrlImages = "https://www.clipartmax.com/png/middle/319-3191274_male-avatar-admin-profile.png",
+              UserName = "admin@gmail.com",
+              NormalizedUserName = "admin@gmail.com".ToUpper(),
+              NormalizedEmail= "admin@gmail.com".ToUpper(),
+              Email = "admin@gmail.com",
+              PasswordHash = passwordHasher.HashPassword(null, defaultPassword)
+          }
+           );
+        }
+        public static void UserRoleSeed(this ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<IdentityUserRole<string>>().HasData(
+                new IdentityUserRole<string>
+                {
+                    RoleId = "fb63abec-98f5-448e-8f56-302fafd16df4",
+                    UserId = "f0fbf9f0-eb17-4c87-9c76-9de5451f74ae"
+                }
+            );
+        }
+
+
+
+
         /* public static void Seed(IApplicationBuilder applicationBuilder)
          {
              using(var serviceScope = applicationBuilder.ApplicationServices.CreateScope())

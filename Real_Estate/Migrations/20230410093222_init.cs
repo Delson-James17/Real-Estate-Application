@@ -10,22 +10,6 @@ namespace Real_Estate.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Appointment",
-                columns: table => new
-                {
-                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Phone = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Address = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    DateofAppointment = table.Column<DateTime>(type: "datetime2", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Appointment", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "AspNetRoles",
                 columns: table => new
                 {
@@ -49,6 +33,7 @@ namespace Real_Estate.Migrations
                     Age = table.Column<int>(type: "int", nullable: false),
                     DOB = table.Column<DateTime>(type: "datetime2", nullable: true),
                     UrlImages = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Zoomlink = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -201,17 +186,71 @@ namespace Real_Estate.Migrations
                     UrlImages = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     PriceifSale = table.Column<double>(type: "float", nullable: false),
                     PriceifRent = table.Column<double>(type: "float", nullable: false),
-                    PropertytypesID = table.Column<int>(type: "int", nullable: true)
+                    PropertytypesID = table.Column<int>(type: "int", nullable: true),
+                    ApplicationUserId = table.Column<string>(type: "nvarchar(450)", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Properties", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Properties_AspNetUsers_ApplicationUserId",
+                        column: x => x.ApplicationUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Properties_PropertyTypes_PropertytypesID",
                         column: x => x.PropertytypesID,
                         principalTable: "PropertyTypes",
                         principalColumn: "Id");
                 });
+
+            migrationBuilder.CreateTable(
+                name: "Appointment",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Phone = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Address = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PropertyId = table.Column<int>(type: "int", nullable: false),
+                    DateofAppointment = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Appointment", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Appointment_Properties_PropertyId",
+                        column: x => x.PropertyId,
+                        principalTable: "Properties",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.InsertData(
+                table: "AspNetRoles",
+                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
+                values: new object[,]
+                {
+                    { "51d0771e-de96-4882-a01e-8f0b9949e90c", "521566ec-fc9c-47af-b408-09e510daa9fa", "Owner", "OWNER" },
+                    { "5c965850-234a-4d90-9c24-024ebfac6f20", "48f72189-bf10-4fb4-a79c-6f048ba26c32", "Client", "CLIENT" },
+                    { "fb63abec-98f5-448e-8f56-302fafd16df4", "467c776c-cffb-476d-8094-b00b10b8919b", "Admin", "ADMIN" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "AspNetUsers",
+                columns: new[] { "Id", "AccessFailedCount", "Address", "Age", "ConcurrencyStamp", "DOB", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "Name", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UrlImages", "UserName", "Zoomlink" },
+                values: new object[] { "f0fbf9f0-eb17-4c87-9c76-9de5451f74ae", 0, "Laguna", 23, "49bf0c79-95e5-4610-ae57-d0efdd83a192", new DateTime(2023, 4, 10, 17, 32, 22, 790, DateTimeKind.Local).AddTicks(1623), "admin@gmail.com", false, false, null, "Admin", "ADMIN@GMAIL.COM", "ADMIN@GMAIL.COM", "AQAAAAEAACcQAAAAEDz3y4Pq2cHFAUpONSu8vC+zYjf1/Ec8eykBMed1N4OfV4FlcfLwn2JlMjkZBZV7FQ==", null, false, "1eccb3f6-414c-4e88-808f-886b248884d9", false, "https://www.clipartmax.com/png/middle/319-3191274_male-avatar-admin-profile.png", "admin@gmail.com", null });
+
+            migrationBuilder.InsertData(
+                table: "AspNetUserRoles",
+                columns: new[] { "RoleId", "UserId" },
+                values: new object[] { "fb63abec-98f5-448e-8f56-302fafd16df4", "f0fbf9f0-eb17-4c87-9c76-9de5451f74ae" });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Appointment_PropertyId",
+                table: "Appointment",
+                column: "PropertyId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -251,6 +290,11 @@ namespace Real_Estate.Migrations
                 column: "NormalizedUserName",
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Properties_ApplicationUserId",
+                table: "Properties",
+                column: "ApplicationUserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Properties_PropertytypesID",

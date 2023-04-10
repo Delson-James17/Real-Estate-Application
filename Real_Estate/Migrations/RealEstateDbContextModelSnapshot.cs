@@ -47,6 +47,29 @@ namespace Real_Estate.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "fb63abec-98f5-448e-8f56-302fafd16df4",
+                            ConcurrencyStamp = "467c776c-cffb-476d-8094-b00b10b8919b",
+                            Name = "Admin",
+                            NormalizedName = "ADMIN"
+                        },
+                        new
+                        {
+                            Id = "5c965850-234a-4d90-9c24-024ebfac6f20",
+                            ConcurrencyStamp = "48f72189-bf10-4fb4-a79c-6f048ba26c32",
+                            Name = "Client",
+                            NormalizedName = "CLIENT"
+                        },
+                        new
+                        {
+                            Id = "51d0771e-de96-4882-a01e-8f0b9949e90c",
+                            ConcurrencyStamp = "521566ec-fc9c-47af-b408-09e510daa9fa",
+                            Name = "Owner",
+                            NormalizedName = "OWNER"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -134,6 +157,13 @@ namespace Real_Estate.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = "f0fbf9f0-eb17-4c87-9c76-9de5451f74ae",
+                            RoleId = "fb63abec-98f5-448e-8f56-302fafd16df4"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
@@ -239,6 +269,29 @@ namespace Real_Estate.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "f0fbf9f0-eb17-4c87-9c76-9de5451f74ae",
+                            AccessFailedCount = 0,
+                            Address = "Laguna",
+                            Age = 23,
+                            ConcurrencyStamp = "49bf0c79-95e5-4610-ae57-d0efdd83a192",
+                            DOB = new DateTime(2023, 4, 10, 17, 32, 22, 790, DateTimeKind.Local).AddTicks(1623),
+                            Email = "admin@gmail.com",
+                            EmailConfirmed = false,
+                            LockoutEnabled = false,
+                            Name = "Admin",
+                            NormalizedEmail = "ADMIN@GMAIL.COM",
+                            NormalizedUserName = "ADMIN@GMAIL.COM",
+                            PasswordHash = "AQAAAAEAACcQAAAAEDz3y4Pq2cHFAUpONSu8vC+zYjf1/Ec8eykBMed1N4OfV4FlcfLwn2JlMjkZBZV7FQ==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "1eccb3f6-414c-4e88-808f-886b248884d9",
+                            TwoFactorEnabled = false,
+                            UrlImages = "https://www.clipartmax.com/png/middle/319-3191274_male-avatar-admin-profile.png",
+                            UserName = "admin@gmail.com"
+                        });
                 });
 
             modelBuilder.Entity("Real_Estate.Models.Appointment", b =>
@@ -247,12 +300,15 @@ namespace Real_Estate.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Address")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("DateofAppointment")
+                        .IsRequired()
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Email")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
@@ -260,9 +316,15 @@ namespace Real_Estate.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Phone")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("PropertyId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("PropertyId");
 
                     b.ToTable("Appointment");
                 });
@@ -384,6 +446,17 @@ namespace Real_Estate.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("Real_Estate.Models.Appointment", b =>
+                {
+                    b.HasOne("Real_Estate.Models.Property", "Property")
+                        .WithMany("Appointments")
+                        .HasForeignKey("PropertyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Property");
+                });
+
             modelBuilder.Entity("Real_Estate.Models.Property", b =>
                 {
                     b.HasOne("Real_Estate.Models.ApplicationUser", "ApplicationUser")
@@ -402,6 +475,11 @@ namespace Real_Estate.Migrations
             modelBuilder.Entity("Real_Estate.Models.ApplicationUser", b =>
                 {
                     b.Navigation("Properties");
+                });
+
+            modelBuilder.Entity("Real_Estate.Models.Property", b =>
+                {
+                    b.Navigation("Appointments");
                 });
 
             modelBuilder.Entity("Real_Estate.Models.PropertyTypes", b =>
