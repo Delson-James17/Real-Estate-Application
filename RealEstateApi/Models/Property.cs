@@ -1,7 +1,9 @@
-﻿using System.ComponentModel;
+﻿using Real_Estate.Models;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Real_EstateApi.Models
+namespace RealEstateApi.Models
 {
     public class Property // resource, Entity
     {
@@ -13,6 +15,14 @@ namespace Real_EstateApi.Models
         public string UrlImages { get; set; }
         public Double PriceifSale { get; set; }
         public Double PriceifRent { get; set; }
+        public List<Appointment>? Appointments { get; set; }
+        //relationships 
+        [ForeignKey("PropertytypesId")]
+        public int? PropertytypesID { get; set; }
+        public PropertyTypes? Propertytypes { get; set; }
+
+        public ApplicationUser? ApplicationUser { get; set; }
+        // 
 
         public Property()
         {

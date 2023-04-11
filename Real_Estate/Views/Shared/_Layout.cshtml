@@ -17,7 +17,7 @@
         <nav>
             <ul>
                 <div class="logo">
-                    <img class="propertyImage" src="~/lib/img/logo.png">
+                    <img class="propertyImage" src="~/lib/img/pjli-real-estate-low-resolution-logo-color-on-transparent-background.png">
                 </div>
                 <hr>
                 <li><a asp-area="" asp-controller="Properties" asp-action="Properties">Home</a></li>
@@ -40,7 +40,9 @@
                     <li>
                         <a asp-area="" asp-controller="Users" asp-action="GetAllUsers">Users </a>
                     </li>
-
+                }
+                @if (_signInManager.IsSignedIn(User) && User.IsInRole("Admin") || User.IsInRole("Owner"))
+                {
                     <li>
                         <a asp-area="" asp-controller="" asp-action="">Appointment </a>
                         <ul>
@@ -49,6 +51,9 @@
 
                         </ul>
                     </li>
+                }
+                @if (_signInManager.IsSignedIn(User) && User.IsInRole("Admin"))
+                {
                     <li>
                         <a asp-area="" asp-controller="" asp-action="">Roles      </a>
                         <ul>
@@ -56,9 +61,6 @@
                             <li> <a asp-controller="Role" asp-action="GetAllRoles">All Roles </a></li>
                         </ul>
                     </li>
-
-
-
                 }
 
                 <span class="navbar-right-side" style="float:right;">

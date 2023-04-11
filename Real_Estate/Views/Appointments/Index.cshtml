@@ -1,8 +1,10 @@
-﻿@model IEnumerable<Real_Estate.Models.Appointment>
+﻿@using Microsoft.AspNetCore.Identity;
+@model IEnumerable<Real_Estate.Models.Appointment>
 
 @{
     ViewData["Title"] = "Index";
 }
+@inject SignInManager<ApplicationUser> _signInManager
 <head>
     <!-- Design by foolishdeveloper.com -->
     <title>Glassmorphism login Form Tutorial in html css</title>
@@ -60,13 +62,22 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Address)
             </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Property.Name)
+                </td>
             <td>
                 @Html.DisplayFor(modelItem => item.DateofAppointment)
             </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <td>
+                    @if (_signInManager.IsSignedIn(User) && User.IsInRole("Admin"))
+                    {
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> 
+                    }
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a>
+                    @if (_signInManager.IsSignedIn(User) && User.IsInRole("Admin"))
+                    {
                 <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    }
             </td>
         </tr>
 }

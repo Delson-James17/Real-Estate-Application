@@ -1,6 +1,6 @@
-﻿using Real_EstateApi.Models;
+﻿using RealEstateApi.Models;
 
-namespace Real_EstateApi.Repository
+namespace RealEstateApi.Repository
 {
     public interface IpropertyRepository // contract 
     {
