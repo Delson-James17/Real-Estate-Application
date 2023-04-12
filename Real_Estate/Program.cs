@@ -7,12 +7,19 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services.AddDbContext<RealEstateDbContext>(options => {
-    options.UseSqlServer(builder.Configuration.GetConnectionString("Real_EstateDbContextConnection"));
-});
+builder.Services.AddDbContext<RealEDbContext>();
 builder.Services.AddControllersWithViews();
 builder.Services.AddIdentity<ApplicationUser , IdentityRole>()
-    .AddEntityFrameworkStores<RealEstateDbContext>();
+    .AddEntityFrameworkStores<RealEDbContext>();
+builder.Services.Configure<IdentityOptions>(options =>
+{
+    options.Password.RequiredLength = 1;
+    options.Password.RequireNonAlphanumeric = false;
+    options.Password.RequireDigit = false;
+    options.Password.RequiredUniqueChars = 0;
+    options.Password.RequireLowercase = false;
+    options.Password.RequireUppercase = false;
+});
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

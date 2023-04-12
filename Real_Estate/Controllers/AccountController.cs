@@ -17,10 +17,10 @@ namespace Real_Estate.Controllers
         private SignInManager<ApplicationUser> _signInManager { get; set; }
         private RoleManager<IdentityRole> _roleManager { get; set; }
 
-        RealEstateDbContext _context;
+        RealEDbContext _context;
 
        
-        public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, RoleManager<IdentityRole> roleManager, RealEstateDbContext context)
+        public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, RoleManager<IdentityRole> roleManager, RealEDbContext context)
         {
             _userManager = userManager;
             _signInManager = signInManager;

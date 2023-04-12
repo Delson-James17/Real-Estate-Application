@@ -17,9 +17,9 @@ namespace Real_Estate.Controllers
    
     public class PropertiesController : Controller
     {
-        private readonly RealEstateDbContext _context;
+        private readonly RealEDbContext _context;
 
-        public PropertiesController(RealEstateDbContext context)
+        public PropertiesController(RealEDbContext context)
         {
             _context = context;
         }
@@ -32,7 +32,7 @@ namespace Real_Estate.Controllers
             //var realEstateDbContext = _context.Properties.Include(p => p.Propertytypes).Include(p => p.owner);
             //return View(await realEstateDbContext.ToListAsync());
             ViewData["CurrentFilter"] = SearchString;
-            var property = from b in _context.Properties
+            var property = from b in _context.EstateProperties
                            select b;
             if (!String.IsNullOrEmpty(SearchString))
             {
@@ -43,7 +43,7 @@ namespace Real_Estate.Controllers
 
         public async Task<IActionResult> ZoomLink(string id)
         {
-            ApplicationUser? user = await _context.Userprofiles.FindAsync(id);
+            ApplicationUser? user = await _context.ApplicationUsers.FindAsync(id);
             ViewBag.User = user;
             return View();
         }
@@ -54,7 +54,7 @@ namespace Real_Estate.Controllers
             //return View(await realEstateDbContext.ToListAsync());
 
             ViewData["CurrentFilter"] = SearchString;
-            var property = from b in _context.Properties
+            var property = from b in _context.EstateProperties
                            select b;
             if (!String.IsNullOrEmpty(SearchString))
             {
@@ -67,20 +67,18 @@ namespace Real_Estate.Controllers
         // GET: Properties/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.Properties == null)
+            if (id == null || _context.EstateProperties == null)
             {
                 return NotFound();
             }
 
-            var @property = await _context.Properties
+            var @property = await _context.EstateProperties
                 .Include(a => a.ApplicationUser)
-                .Include(p => p.Propertytypes)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (@property == null)
             {
                 return NotFound();
             }
-            ViewData["PropertytypesID"] = new SelectList(_context.PropertyTypes, "Id", "Name", "Price");
 
             return View(@property);
         }
@@ -88,7 +86,6 @@ namespace Real_Estate.Controllers
         // GET: Properties/Create
         public IActionResult Create()
         {
-            ViewData["PropertytypesID"] = new SelectList(_context.PropertyTypes, "Id", "Name","Price");
             return View();
         }
         [Authorize(Roles = "Admin, Owner")]
@@ -97,10 +94,10 @@ namespace Real_Estate.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Description,Address,UrlImages,PriceifSale,PriceifRent,PropertytypesID,ownerID, MapLink")] Property property)
+        public async Task<IActionResult> Create([Bind("Id,Name,Description,Address,UrlImages,PriceifSale,PriceifRent,PropertytypesID,ownerID, MapLink")] EstateProperty property)
         {
             string Id = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            ApplicationUser? user = await _context.Userprofiles.FindAsync(Id);
+            ApplicationUser? user = await _context.ApplicationUsers.FindAsync(Id);
             if(user != null)
             {
                 property.ApplicationUser = user;
@@ -111,24 +108,22 @@ namespace Real_Estate.Controllers
                 int value = await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["PropertytypesID"] = new SelectList(_context.PropertyTypes, "Price", "Name", property.PropertytypesID);
             return View(property);
         }
         [Authorize(Roles = "Admin, Owner")]
         // GET: Properties/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.Properties == null)
+            if (id == null || _context.EstateProperties == null)
             {
                 return NotFound();
             }
 
-            var @property = await _context.Properties.FindAsync(id);
+            var @property = await _context.EstateProperties.FindAsync(id);
             if (@property == null)
             {
                 return NotFound();
             }
-            ViewData["PropertytypesID"] = new SelectList(_context.PropertyTypes, "Id", "Id", @property.PropertytypesID);
             return View(@property);
         }
 
@@ -137,7 +132,7 @@ namespace Real_Estate.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Description,Address,UrlImages,PriceifSale,PriceifRent,PropertytypesID,ownerID,MapLink")] Property @property)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Description,Address,UrlImages,PriceifSale,PriceifRent,PropertytypesID,ownerID,MapLink")] EstateProperty @property)
         {
             if (id != @property.Id)
             {
@@ -164,20 +159,18 @@ namespace Real_Estate.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["PropertytypesID"] = new SelectList(_context.PropertyTypes, "Id", "Id", @property.PropertytypesID);
             return View(@property);
         }
         [Authorize(Roles = "Admin, Owner")]
         // GET: Properties/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.Properties == null)
+            if (id == null || _context.EstateProperties == null)
             {
                 return NotFound();
             }
 
-            var @property = await _context.Properties
-                .Include(p => p.Propertytypes)
+            var @property = await _context.EstateProperties
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (@property == null)
             {
@@ -192,14 +185,14 @@ namespace Real_Estate.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.Properties == null)
+            if (_context.EstateProperties == null)
             {
                 return Problem("Entity set 'RealEstateDbContext.Properties'  is null.");
             }
-            var @property = await _context.Properties.FindAsync(id);
+            var @property = await _context.EstateProperties.FindAsync(id);
             if (@property != null)
             {
-                _context.Properties.Remove(@property);
+                _context.EstateProperties.Remove(@property);
             }
             
             await _context.SaveChangesAsync();
@@ -208,7 +201,7 @@ namespace Real_Estate.Controllers
 
         private bool PropertyExists(int id)
         {
-          return (_context.Properties?.Any(e => e.Id == id)).GetValueOrDefault();
+          return (_context.EstateProperties?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }

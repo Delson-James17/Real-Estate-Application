@@ -15,6 +15,7 @@ namespace Real_Estate.ViewModels
         [Required]
         public int Age { get; set; }
         [Required]
+        [RegularExpression("^(09|\\+639)\\d{9}$", ErrorMessage = "Invalid phone number.")]
         public string PhoneNumber { get; set; }
         [Required]
         [DataType(DataType.Date)]

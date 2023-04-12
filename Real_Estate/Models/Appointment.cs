@@ -19,7 +19,7 @@ namespace Real_Estate.Models
       
 
         public int? PropertyId { get; set; }
-        public Property? Property { get; set; }
+        public EstateProperty? Property { get; set; }
        [DataType(DataType.DateTime)]
         [Required]
         public DateTime? DateofAppointment { get; set; }

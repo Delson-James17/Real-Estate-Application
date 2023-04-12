@@ -12,6 +12,6 @@ namespace Real_Estate.Models
         public string UrlImages { get; set; }
         public string? Zoomlink { get; set; }
     
-        public List<Property>Properties { get; set; }
+        public List<EstateProperty>Properties { get; set; }
     }
 }

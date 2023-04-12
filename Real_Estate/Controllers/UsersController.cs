@@ -11,9 +11,9 @@ namespace Real_Estate.Controllers
     public class UsersController : Controller
     {
         private readonly UserManager<ApplicationUser> _userManager;
-        private readonly RealEstateDbContext _context;
+        private readonly RealEDbContext _context;
 
-        public UsersController(UserManager<ApplicationUser> userManager, RealEstateDbContext context)
+        public UsersController(UserManager<ApplicationUser> userManager, RealEDbContext context)
         {
             _userManager = userManager;
             _context = context;
@@ -64,7 +64,7 @@ namespace Real_Estate.Controllers
         {
             string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-            ApplicationUser? userProfile = await _context.Userprofiles.FindAsync(userId);
+            ApplicationUser? userProfile = await _context.ApplicationUsers.FindAsync(userId);
 
             userProfile.Name = user.Name;
             userProfile.Age = user.Age;

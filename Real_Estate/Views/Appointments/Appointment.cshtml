@@ -1,4 +1,4 @@
-﻿@model Real_Estate.Models.Appointment
+﻿@model Real_Estate.ViewModels.AppointmentViewModel
 @*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
@@ -35,41 +35,41 @@
                     <form asp-action="Create">
                         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                         <div class="form-group">
-                            <label asp-for="Id" class="control-label"></label>
-                            <input asp-for="Id" class="form-control" />
-                            <span asp-validation-for="Id" class="text-danger"></span>
+                            <label asp-for="Appointment.Id" class="control-label"></label>
+                            <input asp-for="Appointment.Id" class="form-control" />
+                            <span asp-validation-for="Appointment.Id" class="text-danger"></span>
                         </div>
                         <div class="form-group">
-                            <label asp-for="Name" class="control-label"></label>
-                            <input asp-for="Name" class="form-control" />
-                            <span asp-validation-for="Name" class="text-danger"></span>
+                            <label asp-for="Appointment.Name" class="control-label"></label>
+                            <input asp-for="Appointment.Name" class="form-control" />
+                            <span asp-validation-for="Appointment.Name" class="text-danger"></span>
                         </div>
                         <div class="form-group">
-                            <label asp-for="Email" class="control-label"></label>
-                            <input asp-for="Email" class="form-control" />
-                            <span asp-validation-for="Email" class="text-danger"></span>
+                            <label asp-for="Appointment.Email" class="control-label"></label>
+                            <input asp-for="Appointment.Email" class="form-control" />
+                            <span asp-validation-for="Appointment.Email" class="text-danger"></span>
                         </div>
                         <div class="form-group">
-                            <label asp-for="Phone" class="control-label"></label>
-                            <input asp-for="Phone" class="form-control" />
-                            <span asp-validation-for="Phone" class="text-danger"></span>
+                            <label asp-for="Appointment.Phone" class="control-label"></label>
+                            <input asp-for="Appointment.Phone" class="form-control" />
+                            <span asp-validation-for="Appointment.Phone" class="text-danger"></span>
                         </div>
                         <div class="form-group">
-                            <label asp-for="Address" class="control-label"></label>
-                            <input asp-for="Address" class="form-control" />
-                            <span asp-validation-for="Address" class="text-danger"></span>
+                            <label asp-for="Appointment.Address" class="control-label"></label>
+                            <input asp-for="Appointment.Address" class="form-control" />
+                            <span asp-validation-for="Appointment.Address" class="text-danger"></span>
                         </div>
                         <div class="form-group">
-                            <label asp-for="PropertyId" class="control-label"></label>
-                            <select asp-for="PropertyId" class="form-control" asp-items="ViewBag.PropertyId">
+                            <label asp-for="Appointment.PropertyId" class="control-label"></label>
+                            <select asp-for="Appointment.PropertyId" class="form-control" asp-items="ViewBag.PropertyId">
                                 <option value="">Select an option</option>
                             </select>
-                            <span asp-validation-for="Address" class="text-danger"></span>
+                            <span asp-validation-for="Appointment.Address" class="text-danger"></span>
                         </div>
                         <div class="form-group">
-                            <label asp-for="DateofAppointment" for="date" class="form-label">Date</label>
-                            <input asp-for ="DateofAppointment" type="date"  id="date" class="form-control">
-                            <span asp-validation-for="DateofAppointment" class="text-danger"></span>
+                            <label asp-for="Appointment.DateofAppointment" for="date" class="form-label">Date</label>
+                            <input asp-for="Appointment.DateofAppointment" type="date" id="date" class="form-control">
+                            <span asp-validation-for="Appointment.DateofAppointment" class="text-danger"></span>
                         </div>
                         <div class="form-group">
                             <input type="submit" value="Create" class="btn btn-primary" />
@@ -86,18 +86,18 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
     <script>
+        var events = @Html.Raw(Json.Serialize(Model.Events))
+
         document.addEventListener('DOMContentLoaded', function () {
+
+
+
             var modalEl = document.getElementById('modal');
             var modal = new bootstrap.Modal(modalEl);
             var calendarEl = document.getElementById('calendar');
             var calendar = new FullCalendar.Calendar(calendarEl, {
                 initialView: 'dayGridMonth',
-               /* events: [
-                    {
-                        title: 'event1',
-                        start: '2023-04-10'
-                    }
-                ],*/
+                events: events,
                 dateClick: function(info) {
          alert('Clicked on: ' + info.dateStr);
          info.dayEl.style.backgroundColor = 'red';
@@ -106,7 +106,6 @@
             });
 
             calendar.render();
-
 
             calendar.on('dateClick', function (info) {
                 var button = document.createElement('button');
@@ -119,6 +118,8 @@
                 form.date.value = e.relatedTarget.getAttribute('data-date');
 
             })
+
+            calendar.add
         })
     </script>
 </body>

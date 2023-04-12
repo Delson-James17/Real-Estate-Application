@@ -8,44 +8,55 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Real_Estate.Data;
 using Real_Estate.Models;
+using Real_Estate.ViewModels;
 
 namespace Real_Estate.Controllers
 {
     public class AppointmentsController : Controller
     {
-        private readonly RealEstateDbContext _context;
+        private readonly RealEDbContext _context;
 
-        public AppointmentsController(RealEstateDbContext context)
+        public AppointmentsController(RealEDbContext context)
         {
             _context = context;
         }
         public async Task<IActionResult> Appointment()
         {
-          var properties = await this._context.Properties.Select(p => new Property
+          var properties = await this._context.EstateProperties.Select(p => new EstateProperty
           {
               Id = p.Id,
               Name = p.Name
           }).ToListAsync();
+            var viewmodel = new AppointmentViewModel
+            {
+                Events = _context.Appointments.Select(x => new AppointmentViewModel.EventModel
+                {
+                    Title = x.Name,
+                    Start = x.DateofAppointment.ToString() ?? ""
+                }).ToList(),
+            };
+
             ViewData["PropertyId"] = new SelectList(properties, "Id", "Name" );
-            return View();
+            return View(viewmodel);
         }
+        
 
         // GET: Appointments
         public async Task<IActionResult> Index()
         {
-            var realEstateDbContext = _context.Appointment.Include(a => a.Property);
+            var realEstateDbContext = _context.Appointments.Include(a => a.Property);
             return View(await realEstateDbContext.ToListAsync());
         }
 
         // GET: Appointments/Details/5
         public async Task<IActionResult> Details(string id)
         {
-            if (id == null || _context.Appointment == null)
+            if (id == null || _context.Appointments == null)
             {
                 return NotFound();
             }
 
-            var appointment = await _context.Appointment
+            var appointment = await _context.Appointments
                 .Include(a => a.Property)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (appointment == null)
@@ -59,7 +70,7 @@ namespace Real_Estate.Controllers
         // GET: Appointments/Create
         public IActionResult Create()
         {
-            ViewData["PropertyId"] = new SelectList(_context.Properties, "Id", "Name");
+            ViewData["PropertyId"] = new SelectList(_context.EstateProperties, "Id", "Name");
             return View();
         }
 
@@ -76,24 +87,24 @@ namespace Real_Estate.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["PropertyId"] = new SelectList(_context.Properties, "Id", "Name", appointment.PropertyId);
+            ViewData["PropertyId"] = new SelectList(_context.EstateProperties, "Id", "Name", appointment.PropertyId);
             return View(appointment);
         }
 
         // GET: Appointments/Edit/5
         public async Task<IActionResult> Edit(string id)
         {
-            if (id == null || _context.Appointment == null)
+            if (id == null || _context.Appointments == null)
             {
                 return NotFound();
             }
 
-            var appointment = await _context.Appointment.FindAsync(id);
+            var appointment = await _context.Appointments.FindAsync(id);
             if (appointment == null)
             {
                 return NotFound();
             }
-            ViewData["PropertyId"] = new SelectList(_context.Properties, "Id", "Id", appointment.PropertyId);
+            ViewData["PropertyId"] = new SelectList(_context.EstateProperties, "Id", "Id", appointment.PropertyId);
             return View(appointment);
         }
 
@@ -129,19 +140,19 @@ namespace Real_Estate.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["PropertyId"] = new SelectList(_context.Properties, "Id", "Name", appointment.PropertyId);
+            ViewData["PropertyId"] = new SelectList(_context.EstateProperties, "Id", "Name", appointment.PropertyId);
             return View(appointment);
         }
 
         // GET: Appointments/Delete/5
         public async Task<IActionResult> Delete(string id)
         {
-            if (id == null || _context.Appointment == null)
+            if (id == null || _context.Appointments == null)
             {
                 return NotFound();
             }
 
-            var appointment = await _context.Appointment
+            var appointment = await _context.Appointments
                 .Include(a => a.Property)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (appointment == null)
@@ -157,14 +168,14 @@ namespace Real_Estate.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(string id)
         {
-            if (_context.Appointment == null)
+            if (_context.Appointments == null)
             {
                 return Problem("Entity set 'RealEstateDbContext.Appointment'  is null.");
             }
-            var appointment = await _context.Appointment.FindAsync(id);
+            var appointment = await _context.Appointments.FindAsync(id);
             if (appointment != null)
             {
-                _context.Appointment.Remove(appointment);
+                _context.Appointments.Remove(appointment);
             }
             
             await _context.SaveChangesAsync();
@@ -173,7 +184,7 @@ namespace Real_Estate.Controllers
 
         private bool AppointmentExists(string id)
         {
-          return (_context.Appointment?.Any(e => e.Id == id)).GetValueOrDefault();
+          return (_context.Appointments?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }

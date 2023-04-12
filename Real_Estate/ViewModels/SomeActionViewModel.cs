@@ -4,7 +4,7 @@ namespace Real_Estate.ViewModels
 {
     public class SomeActionViewModel
     {
-        public Property Property;
+        public EstateProperty Property;
         public string user;
     }
 }
