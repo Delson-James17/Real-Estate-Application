@@ -1,10 +1,49 @@
-﻿@model Real_Estate.Models.Appointment
+@model Real_Estate.Models.Appointment
 
 @{
     ViewData["Title"] = "Delete";
 }
 
-<h1>Delete</h1>
+<head>
+    <!-- Design by foolishdeveloper.com -->
+    <title>Glassmorphism login Form Tutorial in html css</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
+</head>
+
+<body class="login-register-Body">
+    <form class="forms" asp-action="Delete">
+        <h1 class="whiteText" style="text-align:center;">Delete</h1>
+        <h2 class="whiteText" style="text-align:center;">Are you sure you want to delete this?</h2>
+        <label for="username" class="whiteText">Name</label>
+        <h2 class="whiteText">@Html.DisplayFor(model => model.Name)</h2>
+
+        <label for="password" class="whiteText">Email</label>
+        <h2 class="whiteText">@Html.DisplayFor(model => model.Email)</h2>
+
+        <label for="password" class="whiteText">Phone</label>
+        <h2 class="whiteText">@Html.DisplayFor(model => model.Phone)</h2>
+
+        <label for="password" class="whiteText">Address</label>
+        <h2 class="whiteText">@Html.DisplayFor(model => model.Address)</h2>
+
+        <label for="password" class="whiteText">Date of Appointment</label>
+        <h2 class="whiteText">@Html.DisplayFor(model => model.DateofAppointment)</h2>
+
+        <div>
+            <input type="hidden" asp-for="Id" />
+            <input type="submit" value="Delete" class="btn btn-danger" />
+        </div>
+        <div class="buttonDiv">
+            <a asp-action="Index" class="whiteText">Back to List</a>
+        </div>
+    </form>
+
+
+</body>
+
+@*<h1>Delete</h1>
 
 <h3>Are you sure you want to delete this?</h3>
 <div>
@@ -54,4 +93,4 @@
         <input type="submit" value="Delete" class="btn btn-danger" /> |
         <a asp-action="Index">Back to List</a>
     </form>
-</div>
+</div>*@
