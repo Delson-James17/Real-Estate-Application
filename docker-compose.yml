@@ -1,2 +1,42 @@
 # Please refer https://aka.ms/HTTPSinContainer on how to setup an https developer certificate for your ASP.NET Core service.
 
+version: '3.4'
+services:
+  realestateapi:
+    image: realestateapi
+    build:
+      context: .
+      dockerfile: RealEstate.API/Dockerfile
+    ports:
+      - 6001:80
+    environment:
+      - ConnectionStrings__Server=realestatessql
+      - ConnectionStrings__DB=RealEstateDB
+      - ConnectionStrings__Username=sa
+      - ConnectionStrings__Password=Pa$$w0rd!
+    depends_on:
+      - realestatessql
+      - realestatewebapp
+    restart: on-failure
+  realestatewebapp:
+    image: realestatewebapp
+    build:
+      context: .
+      dockerfile: Real_Estate/Dockerfile
+    ports:
+      - 5001:80
+    environment: 
+      - ConnectionStrings__Server=realestatessql
+      - ConnectionStrings__DB=RealEstateDB
+      - ConnectionStrings__Username=sa
+      - ConnectionStrings__Password=Pa$$w0rd!
+    depends_on:
+      - realestatessql
+    restart: on-failure
+  realestatessql:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    ports:
+      - 1433:1433
+    environment:
+      - ACCEPT_EULA=Y
+      - MSSQL_SA_PASSWORD=Pa$$w0rd!

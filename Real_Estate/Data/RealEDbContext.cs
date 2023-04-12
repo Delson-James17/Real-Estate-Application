@@ -6,15 +6,34 @@ namespace Real_Estate.Data
 {
     public class RealEDbContext: IdentityDbContext<ApplicationUser>
     {
-        public RealEDbContext(DbContextOptions<RealEDbContext> options):base(options)
+        public IConfiguration _appConfig { get; }
+        public ILogger _logger { get; }
+        private readonly IWebHostEnvironment _env;
+        public RealEDbContext(IConfiguration appConfig, ILogger<RealEDbContext> logger,
+            IWebHostEnvironment env)
         {
+            _appConfig = appConfig;
+            _logger = logger;
+            _env = env;
         }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-
-            //Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=master;Integrated Security=True;Connect Timeout=30;Encrypt=False;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False
-            string connectionString = @"Server=(localdb)\MSSQLLocalDB;Database=RealEDb; Integrated Security=True;";
-            optionsBuilder.UseSqlServer(connectionString);
+            var server = _appConfig.GetConnectionString("Server");
+            var db = _appConfig.GetConnectionString("DB");
+            string connectionString;
+            if (_env.IsDevelopment())
+            {
+                connectionString = $"Server={server};Database={db};MultipleActiveResultSets=true";
+            }
+            else
+            {
+                var username = _appConfig.GetConnectionString("Username");
+                var password = _appConfig.GetConnectionString("Password");
+                connectionString = $"Server={server};Database={db};User Id={username};Password={password};Trusted_Connection=True;MultipleActiveResultSets=true;TrustServerCertificate=True;";
+            }
+            optionsBuilder.UseSqlServer(connectionString)
+                .UseQueryTrackingBehavior(QueryTrackingBehavior
+                .NoTracking);
             base.OnConfiguring(optionsBuilder);
         }
         protected override void OnModelCreating(ModelBuilder builder)
